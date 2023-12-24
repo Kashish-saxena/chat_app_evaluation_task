@@ -16,9 +16,9 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
-
   late StreamController<ChatMessage> chatController;
   List<ChatMessage> chatMessages = [];
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +27,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _sendMessage() {
     String messageText = messageController.text;
+
     ChatMessage message = ChatMessage(message: messageText);
+    
     if(messageText.isNotEmpty){
     chatController.add(message);
     messageController.clear();
@@ -53,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
             stream: chatController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                chatMessages.add(snapshot.data!);
+                chatMessages.add(snapshot.data??ChatMessage(message: ""));
 
                 return ListView.builder(
                   itemCount: chatMessages.length,
