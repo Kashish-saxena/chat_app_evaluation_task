@@ -8,10 +8,7 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   final String? currentUser;
-
-  const ChatScreen(
-      {Key? key, this.currentUser, })
-      : super(key: key);
+  const ChatScreen({Key? key, this.currentUser}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -20,9 +17,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
 
-  final List chatMessages = [];
   late StreamController<ChatMessage> chatController;
-
+  List<ChatMessage> chatMessages = [];
   @override
   void initState() {
     super.initState();
@@ -32,8 +28,10 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage() {
     String messageText = messageController.text;
     ChatMessage message = ChatMessage(message: messageText);
+    if(messageText.isNotEmpty){
     chatController.add(message);
     messageController.clear();
+    }
   }
 
   @override
@@ -52,49 +50,48 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder(
-              stream: chatController.stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  chatMessages
-                      .add(snapshot.data ?? ChatMessage(message: ""));
+            stream: chatController.stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                chatMessages.add(snapshot.data!);
 
-                  return ListView.builder(
-                    itemCount: chatMessages.length,
-                    itemBuilder: (context, index) {
-                      ChatMessage chatItem = chatMessages[index];
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: widget.currentUser == "sender"
-                              ? MainAxisAlignment.end
-                              : MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: widget.currentUser == "sender"
-                                    ? ColorConstants.blue3887BE
-                                    : ColorConstants.blue52D3D8,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Text(
-                                chatItem.message,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
+                return ListView.builder(
+                  itemCount: chatMessages.length,
+                  itemBuilder: (context, index) {
+                    ChatMessage chatItem = chatMessages[index];
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: widget.currentUser == "sender"
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: widget.currentUser == "sender"
+                                  ? ColorConstants.blue3887BE
+                                  : ColorConstants.blue52D3D8,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              chatItem.message,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }
-                return Container();
-              },
-            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+              return Container();
+            },
+          ),
           ),
           Container(
             margin: const EdgeInsets.all(10),
