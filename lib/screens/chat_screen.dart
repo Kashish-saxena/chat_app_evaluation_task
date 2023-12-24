@@ -1,18 +1,17 @@
 import 'dart:async';
 
+import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/utils/color_constants.dart';
+import 'package:chat_app/utils/string_constants.dart';
+import 'package:chat_app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
-
-class ChatMessage {
-  String message;
-
-  ChatMessage({required this.message});
-}
 
 class ChatScreen extends StatefulWidget {
   final String? currentUser;
 
-  const ChatScreen({Key? key, this.currentUser}) : super(key: key);
+  const ChatScreen(
+      {Key? key, this.currentUser, })
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -21,7 +20,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
 
-  final List<ChatMessage> chatMessages = [];
+  final List chatMessages = [];
   late StreamController<ChatMessage> chatController;
 
   @override
@@ -45,8 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: ColorConstants.blue200E3A,
         title: const Text(
-          'ChatScreen',
-          style: TextStyle(color: ColorConstants.white),
+          StringConstants.chatScreen,
+          style: TextStyles.textStyleFont20Weight600,
         ),
       ),
       body: Column(
@@ -56,22 +55,23 @@ class _ChatScreenState extends State<ChatScreen> {
               stream: chatController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  chatMessages.add(snapshot.data ?? ChatMessage(message: ""));
+                  chatMessages
+                      .add(snapshot.data ?? ChatMessage(message: ""));
 
                   return ListView.builder(
                     itemCount: chatMessages.length,
                     itemBuilder: (context, index) {
                       ChatMessage chatItem = chatMessages[index];
                       return Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
                         child: Row(
                           mainAxisAlignment: widget.currentUser == "sender"
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 color: widget.currentUser == "sender"
                                     ? ColorConstants.blue3887BE
@@ -97,7 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: Stack(
               children: [
                 TextField(
@@ -109,8 +109,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'Write a message...',
-                      hintStyle: const TextStyle(color: ColorConstants.white)),
+                      hintText: StringConstants.message,
+                      hintStyle: TextStyles.textStyleFont14Weight400),
                 ),
                 Positioned(
                   right: 10,

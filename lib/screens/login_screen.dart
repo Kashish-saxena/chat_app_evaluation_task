@@ -1,3 +1,4 @@
+import 'package:chat_app/models/chat_messages.dart';
 import 'package:chat_app/screens/chat_screen.dart';
 import 'package:chat_app/utils/string_constants.dart';
 import 'package:chat_app/utils/text_styles.dart';
@@ -23,6 +24,7 @@ class LoginScreenState extends State<LoginScreen> {
 
 // radio button
   static String? selectedOption = "sender";
+
 
   void chatPerson(String value) {
     setState(() {
@@ -89,24 +91,22 @@ class LoginScreenState extends State<LoginScreen> {
 
               // Radio button <<<<<<<<<<<<<<<<<<<
               Container(
-                margin: EdgeInsets.symmetric(vertical: 25),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(vertical: 25),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: ColorConstants.blue38419D,
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("User Type",
-                        style: TextStyles.textStyleFont14Weight600
-                            .copyWith(color: ColorConstants.white)),
+                    const Text(StringConstants.userType,
+                        style: TextStyles.textStyleFont14Weight400),
                     ListTile(
-                      title: Text('Sender',
-                          style: TextStyles.textStyleFont14Weight600
-                              .copyWith(color: ColorConstants.white)),
+                      title: const Text(StringConstants.sender,
+                          style: TextStyles.textStyleFont14Weight400),
                       leading: Radio(
                         activeColor: ColorConstants.white,
-                        value: "sender",
+                        value:"sender",
                         groupValue: selectedOption,
                         onChanged: (value) {
                           setState(() {
@@ -116,9 +116,8 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     ListTile(
-                      title: Text('Receiver',
-                          style: TextStyles.textStyleFont14Weight600
-                              .copyWith(color: ColorConstants.white)),
+                      title: const Text(StringConstants.receiver,
+                          style: TextStyles.textStyleFont14Weight400),
                       leading: Radio(
                         activeColor: ColorConstants.white,
                         value: "receiver",
@@ -134,7 +133,6 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              
               ButtonWidget(
                 text: StringConstants.login,
                 onPressed: () {
@@ -144,8 +142,9 @@ class LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ChatScreen(
-                              currentUser: selectedOption,
-                              ),
+                            currentUser: selectedOption,
+                       
+                          ),
                         ));
                   }
                 },
