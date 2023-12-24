@@ -142,7 +142,7 @@ class LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ChatScreen(
-                            currentUser: selectedOption,
+                            currentUser: selectedOption??"",
                        
                           ),
                         ));

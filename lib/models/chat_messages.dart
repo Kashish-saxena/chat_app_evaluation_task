@@ -1,4 +1,6 @@
 class ChatMessage {
-  String message;
-  ChatMessage({required this.message});
+  final String text;
+  final String sender;
+
+  ChatMessage({required this.text, required this.sender});
 }
