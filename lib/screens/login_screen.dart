@@ -1,4 +1,4 @@
-import 'package:chat_app/models/chat_messages.dart';
+
 import 'package:chat_app/screens/chat_screen.dart';
 import 'package:chat_app/utils/string_constants.dart';
 import 'package:chat_app/utils/text_styles.dart';

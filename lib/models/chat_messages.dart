@@ -1,6 +1,5 @@
-class ChatMessage {
-  final String text;
-  final String sender;
-
-  ChatMessage({required this.text, required this.sender});
+class ChatMessages {
+  String? messages;
+  String? sender;
+  ChatMessages({this.messages,this.sender});
 }
